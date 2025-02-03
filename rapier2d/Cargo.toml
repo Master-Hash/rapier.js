@@ -27,14 +27,13 @@ rust.unexpected_cfgs = { level = "warn", check-cfg = [
 ] }
 
 [dependencies]
-rapier2d = { version = "0.22", features = [
-    "wasm-bindgen",
+rapier2d = { version = "0.23", features = [
     "serde-serialize",
     "enhanced-determinism",
     "debug-render",
 ] }
 ref-cast = "1"
-wasm-bindgen = "0.2.90"
+wasm-bindgen = "0.2.100"
 js-sys = "0.3"
 nalgebra = "0.33"
 serde = { version = "1", features = ["derive", "rc"] }
@@ -42,7 +41,13 @@ bincode = "1"
 crossbeam-channel = "0.5"
 palette = "0.7"
 libm = "0.2"
-parry2d = "0.17" # Use at least this version to fix a regression in 0.15.0
+parry2d = "0.18" # Use at least this version to fix a regression in 0.15.0
+
+# [profile.release]
+# codegen-units = 1
+# lto = true
+# strip = true
+# panic = "abort"
 
 [package.metadata.wasm-pack.profile.release]
 # add -g to keep debug symbols

@@ -15,7 +15,7 @@
 <p align = "center">
     <strong>
         <a href="https://rapier.rs">Website</a> | <a href="https://rapier.rs/docs/">Documentation</a> |
-        <a href="https://github.com/dimforge/rapier.js/tree/master/testbed2d/src/demos">2D examples (sources)</a> | 
+        <a href="https://github.com/dimforge/rapier.js/tree/master/testbed2d/src/demos">2D examples (sources)</a> |
         <a href="https://github.com/dimforge/rapier.js/tree/master/testbed3d/src/demos">3D examples (sources)</a>
 </p>
 
@@ -23,7 +23,26 @@
 
 <p align = "center">
 <b>2D and 3D physics engines</b>
-<i>for the JavaScript programming language (official bindings).</i>
+<i>for the JavaScript programming language (non-official bindings).</i>
 </p>
 
 ---
+
+在官方 binding 基础上，调整如下：
+
+1. 砍掉 control 模块；
+2. 启用 -Oz 等编译参数，减少体积；
+3. 使用最新的 rapier rust 依赖。
+
+编译参数：
+
+```bash
+cd rapier2d
+cargo build --release --verbose --target wasm32-unknown-unknown
+wasm-bindgen ../target/wasm32-unknown-unknown/release/rapier_wasm2d.wasm --out-dir ./pkg --typescript --target web
+wasm-opt ./pkg/rapier_wasm2d_bg.wasm -o ./pkg/rapier_wasm2d_bg.wasm.opt -Oz --dce
+./build_typescript.sh
+pnpm tsc
+```
+
+我认为官方版本和我的版本都可以不内联 base64，也不借助 [vite-plugin-wasm](https://github.com/Menci/vite-plugin-wasm)，而用 rapier_wasm2d.js 的 export default 初始化。

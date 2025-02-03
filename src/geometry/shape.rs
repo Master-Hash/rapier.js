@@ -299,7 +299,7 @@ impl RawShape {
         let flags = TriMeshFlags::from_bits(flags as u16).unwrap_or_default();
         let vertices = vertices.chunks(DIM).map(|v| Point::from_slice(v)).collect();
         let indices = indices.chunks(3).map(|v| [v[0], v[1], v[2]]).collect();
-        Self(SharedShape::trimesh_with_flags(vertices, indices, flags))
+        Self(SharedShape::trimesh_with_flags(vertices, indices, flags).unwrap())
     }
 
     #[cfg(feature = "dim2")]
