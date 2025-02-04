@@ -31,8 +31,9 @@
 在官方 binding 基础上，调整如下：
 
 1. 砍掉 control 模块；
-2. 启用 -Oz 等编译参数，减少体积；
-3. 使用最新的 rapier rust 依赖。
+2. wasm-bindgen target web 而不是 bundler，兼容 vite；
+3. 启用 -Oz 等编译参数，减少体积；
+4. 使用最新的 rapier rust 依赖。
 
 编译参数：
 
@@ -45,4 +46,4 @@ wasm-opt ./pkg/rapier_wasm2d_bg.wasm -o ./pkg/rapier_wasm2d_bg.wasm.opt -Oz --dc
 pnpm tsc
 ```
 
-我认为官方版本和我的版本都可以不内联 base64，也不借助 [vite-plugin-wasm](https://github.com/Menci/vite-plugin-wasm)，而用 rapier_wasm2d.js 的 export default 初始化。
+<!-- 我认为官方版本和我的版本都可以不内联 base64，也不借助 [vite-plugin-wasm](https://github.com/Menci/vite-plugin-wasm)，而用 rapier_wasm2d.js 的 export default 初始化。 -->
