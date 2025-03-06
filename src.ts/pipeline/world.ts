@@ -53,17 +53,7 @@ import {SerializationPipeline} from "./serialization_pipeline";
 import {EventQueue} from "./event_queue";
 import {PhysicsHooks} from "./physics_hooks";
 import {DebugRenderBuffers, DebugRenderPipeline} from "./debug_render_pipeline";
-import {
-    KinematicCharacterController,
-    PidAxesMask,
-    PidController,
-} from "../control";
 import {Coarena} from "../coarena";
-
-// #if DIM3
-import {DynamicRayCastVehicleController} from "../control";
-
-// #endif
 
 /**
  * The physics world.
@@ -85,13 +75,6 @@ export class World {
     physicsPipeline: PhysicsPipeline;
     serializationPipeline: SerializationPipeline;
     debugRenderPipeline: DebugRenderPipeline;
-    characterControllers: Set<KinematicCharacterController>;
-    pidControllers: Set<PidController>;
-
-    // #if DIM3
-    vehicleControllers: Set<DynamicRayCastVehicleController>;
-
-    // #endif
 
     /**
      * Release the WASM memory occupied by this physics world.
@@ -112,12 +95,6 @@ export class World {
         this.physicsPipeline.free();
         this.serializationPipeline.free();
         this.debugRenderPipeline.free();
-        this.characterControllers.forEach((controller) => controller.free());
-        this.pidControllers.forEach((controller) => controller.free());
-
-        // #if DIM3
-        this.vehicleControllers.forEach((controller) => controller.free());
-        // #endif
 
         this.integrationParameters = undefined;
         this.islands = undefined;
@@ -131,12 +108,6 @@ export class World {
         this.physicsPipeline = undefined;
         this.serializationPipeline = undefined;
         this.debugRenderPipeline = undefined;
-        this.characterControllers = undefined;
-        this.pidControllers = undefined;
-
-        // #if DIM3
-        this.vehicleControllers = undefined;
-        // #endif
     }
 
     constructor(
@@ -173,12 +144,6 @@ export class World {
         this.debugRenderPipeline = new DebugRenderPipeline(
             rawDebugRenderPipeline,
         );
-        this.characterControllers = new Set<KinematicCharacterController>();
-        this.pidControllers = new Set<PidController>();
-
-        // #if DIM3
-        this.vehicleControllers = new Set<DynamicRayCastVehicleController>();
-        // #endif
 
         this.impulseJoints.finalizeDeserialization(this.bodies);
         this.bodies.finalizeDeserialization(this.colliders);
@@ -484,115 +449,6 @@ export class World {
     public createRigidBody(body: RigidBodyDesc): RigidBody {
         return this.bodies.createRigidBody(this.colliders, body);
     }
-
-    /**
-     * Creates a new character controller.
-     *
-     * @param offset - The artificial gap added between the character’s chape and its environment.
-     */
-    public createCharacterController(
-        offset: number,
-    ): KinematicCharacterController {
-        let controller = new KinematicCharacterController(
-            offset,
-            this.integrationParameters,
-            this.broadPhase,
-            this.narrowPhase,
-            this.bodies,
-            this.colliders,
-        );
-        this.characterControllers.add(controller);
-        return controller;
-    }
-
-    /**
-     * Removes a character controller from this world.
-     *
-     * @param controller - The character controller to remove.
-     */
-    public removeCharacterController(controller: KinematicCharacterController) {
-        this.characterControllers.delete(controller);
-        controller.free();
-    }
-
-    /**
-     * Creates a new PID (Proportional-Integral-Derivative) controller.
-     *
-     * @param kp - The Proportional gain applied to the instantaneous linear position errors.
-     *             This is usually set to a multiple of the inverse of simulation step time
-     *             (e.g. `60` if the delta-time is `1.0 / 60.0`).
-     * @param ki - The linear gain applied to the Integral part of the PID controller.
-     * @param kd - The Derivative gain applied to the instantaneous linear velocity errors.
-     *             This is usually set to a value in `[0.0, 1.0]` where `0.0` implies no damping
-     *             (no correction of velocity errors) and `1.0` implies complete damping (velocity errors
-     *             are corrected in a single simulation step).
-     * @param axes - The axes affected by this controller.
-     *               Only coordinate axes with a bit flags set to `true` will be taken into
-     *               account when calculating the errors and corrections.
-     */
-    public createPidController(
-        kp: number,
-        ki: number,
-        kd: number,
-        axes: PidAxesMask,
-    ): PidController {
-        let controller = new PidController(
-            this.integrationParameters,
-            this.bodies,
-            kp,
-            ki,
-            kd,
-            axes,
-        );
-        this.pidControllers.add(controller);
-        return controller;
-    }
-
-    /**
-     * Removes a PID controller from this world.
-     *
-     * @param controller - The PID controller to remove.
-     */
-    public removePidController(controller: PidController) {
-        this.pidControllers.delete(controller);
-        controller.free();
-    }
-
-    // #if DIM3
-    /**
-     * Creates a new vehicle controller.
-     *
-     * @param chassis - The rigid-body used as the chassis of the vehicle controller. When the vehicle
-     *                  controller is updated, it will change directly the rigid-body’s velocity. This
-     *                  rigid-body must be a dynamic or kinematic-velocity-based rigid-body.
-     */
-    public createVehicleController(
-        chassis: RigidBody,
-    ): DynamicRayCastVehicleController {
-        let controller = new DynamicRayCastVehicleController(
-            chassis,
-            this.broadPhase,
-            this.narrowPhase,
-            this.bodies,
-            this.colliders,
-        );
-        this.vehicleControllers.add(controller);
-        return controller;
-    }
-
-    /**
-     * Removes a vehicle controller from this world.
-     *
-     * @param controller - The vehicle controller to remove.
-     */
-    public removeVehicleController(
-        controller: DynamicRayCastVehicleController,
-    ) {
-        this.vehicleControllers.delete(controller);
-        controller.free();
-    }
-
-    // #endif
 
     /**
      * Creates a new collider.
