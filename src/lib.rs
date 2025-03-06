@@ -24,7 +24,6 @@ pub fn reserve_memory(extra_bytes_count: u32) {
     std::hint::black_box(&unused);
 }
 
-pub mod control;
 pub mod dynamics;
 pub mod geometry;
 pub mod math;
