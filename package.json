@@ -1,12 +1,10 @@
 {
     "scripts": {
-        "fmt": "prettier ."
+        "fmt": "prettier .",
+        "tsc": "tsc"
     },
     "devDependencies": {
-        "prettier": "2.7.1",
-        "typedoc": "0.23.19",
-        "typescript": "4.8.4",
-        "wasm-opt": "1.4.0",
-        "wasm-pack": "0.12.1"
-    }
+        "typescript": "^5.8.2"
+    },
+    "packageManager": "pnpm@10.5.2"
 }
