@@ -17,7 +17,6 @@ pub fn version() -> String {
     env!("CARGO_PKG_VERSION").to_string()
 }
 
-pub mod control;
 pub mod dynamics;
 pub mod geometry;
 pub mod math;
