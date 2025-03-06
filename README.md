@@ -27,3 +27,21 @@
 </p>
 
 ---
+
+在官方 binding 基础上，调整如下：
+
+1. 砍掉 control 模块；
+2. wasm-bindgen target web 而不是 bundler，兼容 vite；
+3. 启用 -Oz 等编译参数，减少体积；
+4. 使用最新的 rapier rust 依赖。
+
+编译参数：
+
+```bash
+cd rapier2d
+cargo build --release --verbose --target wasm32-unknown-unknown
+wasm-bindgen ../target/wasm32-unknown-unknown/release/rapier_wasm2d.wasm --out-dir ./pkg --typescript --target web
+wasm-opt ./pkg/rapier_wasm2d_bg.wasm -o ./pkg/rapier_wasm2d_bg.wasm.opt -Oz --dce
+./build_typescript.sh
+pnpm tsc
+```
