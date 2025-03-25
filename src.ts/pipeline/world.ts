@@ -2,7 +2,6 @@ import {
     RawBroadPhase,
     RawCCDSolver,
     RawColliderSet,
-    RawDeserializedWorld,
     RawIntegrationParameters,
     RawIslandManager,
     RawImpulseJointSet,
@@ -10,8 +9,6 @@ import {
     RawNarrowPhase,
     RawPhysicsPipeline,
     RawRigidBodySet,
-    RawSerializationPipeline,
-    RawDebugRenderPipeline,
 } from "../raw";
 
 import {
@@ -49,10 +46,8 @@ import {
 import {Rotation, Vector, VectorOps} from "../math";
 import {PhysicsPipeline} from "./physics_pipeline";
 import {QueryFilterFlags} from "./query_pipeline";
-import {SerializationPipeline} from "./serialization_pipeline";
 import {EventQueue} from "./event_queue";
 import {PhysicsHooks} from "./physics_hooks";
-import {DebugRenderBuffers, DebugRenderPipeline} from "./debug_render_pipeline";
 import {Coarena} from "../coarena";
 
 /**
@@ -73,8 +68,6 @@ export class World {
     multibodyJoints: MultibodyJointSet;
     ccdSolver: CCDSolver;
     physicsPipeline: PhysicsPipeline;
-    serializationPipeline: SerializationPipeline;
-    debugRenderPipeline: DebugRenderPipeline;
 
     /**
      * Release the WASM memory occupied by this physics world.
@@ -93,8 +86,6 @@ export class World {
         this.multibodyJoints.free();
         this.ccdSolver.free();
         this.physicsPipeline.free();
-        this.serializationPipeline.free();
-        this.debugRenderPipeline.free();
 
         this.integrationParameters = undefined;
         this.islands = undefined;
@@ -106,8 +97,6 @@ export class World {
         this.impulseJoints = undefined;
         this.multibodyJoints = undefined;
         this.physicsPipeline = undefined;
-        this.serializationPipeline = undefined;
-        this.debugRenderPipeline = undefined;
     }
 
     constructor(
@@ -122,8 +111,6 @@ export class World {
         rawMultibodyJoints?: RawMultibodyJointSet,
         rawCCDSolver?: RawCCDSolver,
         rawPhysicsPipeline?: RawPhysicsPipeline,
-        rawSerializationPipeline?: RawSerializationPipeline,
-        rawDebugRenderPipeline?: RawDebugRenderPipeline,
     ) {
         this.gravity = gravity;
         this.integrationParameters = new IntegrationParameters(
@@ -138,88 +125,10 @@ export class World {
         this.multibodyJoints = new MultibodyJointSet(rawMultibodyJoints);
         this.ccdSolver = new CCDSolver(rawCCDSolver);
         this.physicsPipeline = new PhysicsPipeline(rawPhysicsPipeline);
-        this.serializationPipeline = new SerializationPipeline(
-            rawSerializationPipeline,
-        );
-        this.debugRenderPipeline = new DebugRenderPipeline(
-            rawDebugRenderPipeline,
-        );
 
         this.impulseJoints.finalizeDeserialization(this.bodies);
         this.bodies.finalizeDeserialization(this.colliders);
         this.colliders.finalizeDeserialization(this.bodies);
-    }
-
-    public static fromRaw(raw: RawDeserializedWorld): World {
-        if (!raw) return null;
-
-        return new World(
-            VectorOps.fromRaw(raw.takeGravity()),
-            raw.takeIntegrationParameters(),
-            raw.takeIslandManager(),
-            raw.takeBroadPhase(),
-            raw.takeNarrowPhase(),
-            raw.takeBodies(),
-            raw.takeColliders(),
-            raw.takeImpulseJoints(),
-            raw.takeMultibodyJoints(),
-        );
-    }
-
-    /**
-     * Takes a snapshot of this world.
-     *
-     * Use `World.restoreSnapshot` to create a new physics world with a state identical to
-     * the state when `.takeSnapshot()` is called.
-     */
-    public takeSnapshot(): Uint8Array {
-        return this.serializationPipeline.serializeAll(
-            this.gravity,
-            this.integrationParameters,
-            this.islands,
-            this.broadPhase,
-            this.narrowPhase,
-            this.bodies,
-            this.colliders,
-            this.impulseJoints,
-            this.multibodyJoints,
-        );
-    }
-
-    /**
-     * Creates a new physics world from a snapshot.
-     *
-     * This new physics world will be an identical copy of the snapshoted physics world.
-     */
-    public static restoreSnapshot(data: Uint8Array): World {
-        let deser = new SerializationPipeline();
-        return deser.deserializeAll(data);
-    }
-
-    /**
-     * Computes all the lines (and their colors) needed to render the scene.
-     *
-     * @param filterFlags - Flags for excluding whole subsets of colliders from rendering.
-     * @param filterPredicate - Any collider for which this closure returns `false` will be excluded from the
-     *                          debug rendering.
-     */
-    public debugRender(
-        filterFlags?: QueryFilterFlags,
-        filterPredicate?: (collider: Collider) => boolean,
-    ): DebugRenderBuffers {
-        this.debugRenderPipeline.render(
-            this.bodies,
-            this.colliders,
-            this.impulseJoints,
-            this.multibodyJoints,
-            this.narrowPhase,
-            filterFlags,
-            filterPredicate,
-        );
-        return new DebugRenderBuffers(
-            this.debugRenderPipeline.vertices,
-            this.debugRenderPipeline.colors,
-        );
     }
 
     /**
