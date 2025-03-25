@@ -52,9 +52,8 @@ jobs:
       - name: Build rapier2d
         run: |
           cd rapier2d
-          cargo build --release --verbose --target wasm32-unknown-unknown
-          wasm-bindgen ../target/wasm32-unknown-unknown/release/rapier_wasm2d.wasm --out-dir ./pkg --typescript --target web
-          wasm-opt ./pkg/rapier_wasm2d_bg.wasm -o ./pkg/rapier_wasm2d_bg.wasm -Oz --dce --enable-simd
+          cargo build --verbose --target wasm32-unknown-unknown
+          wasm-bindgen ../target/wasm32-unknown-unknown/release/rapier_wasm2d.wasm --out-dir ./pkg --typescript --target web --keep-debug
           ./build_typescript.sh
           pnpm tsc
       - uses: actions/upload-artifact@v4
