@@ -31,9 +31,9 @@ checksum = "ace50bade8e6234aa140d9a2f552bbee1db4d353f69b8217bc503490fc1a9f26"
 
 [[package]]
 name = "bit-vec"
-version = "0.7.0"
+version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d2c54ff287cfc0a34f38a6b832ea1bd8e448a330b3e40a50859e6488bee07f22"
+checksum = "5e764a1d40d510daf35e07be9eb06e75770908c27d411ee6c92109c9840eaaf7"
 
 [[package]]
 name = "bitflags"
@@ -80,9 +80,9 @@ dependencies = [
 
 [[package]]
 name = "crossbeam-channel"
-version = "0.5.14"
+version = "0.5.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "06ba6d68e24814cb8de6bb986db8222d3a027d15872cabc0d18817bc3c0e4471"
+checksum = "82b8f8f868b36967f9606790d1903570de9ceaf870a7bf9fbbd3016d636a2cb2"
 dependencies = [
  "crossbeam-utils",
 ]
@@ -123,7 +123,7 @@ checksum = "d0a5c400df2834b80a4c3327b3aad3a4c4cd4de0629063962b03235697506a28"
 
 [[package]]
 name = "dimforge_rapier2d"
-version = "0.14.0"
+version = "0.15.1"
 dependencies = [
  "js-sys",
  "nalgebra",
@@ -133,7 +133,7 @@ dependencies = [
 
 [[package]]
 name = "dimforge_rapier3d"
-version = "0.14.0"
+version = "0.15.1"
 dependencies = [
  "js-sys",
  "nalgebra",
@@ -143,9 +143,9 @@ dependencies = [
 
 [[package]]
 name = "downcast-rs"
-version = "1.2.1"
+version = "2.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "75b325c5dbd37f80359721ad39aca5a29fb04c89279657cffdda8736d0c0b9d2"
+checksum = "ea8a8b81cacc08888170eef4d13b775126db426d0b348bee9d18c2c1eaf123cf"
 
 [[package]]
 name = "either"
@@ -325,24 +325,24 @@ dependencies = [
 
 [[package]]
 name = "once_cell"
-version = "1.21.1"
+version = "1.21.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d75b0bedcc4fe52caa0e03d9f1151a323e4aa5e2d78ba3580400cd3c9e2bc4bc"
+checksum = "42f5e15c9953c5e4ccceeb2e7382a716482c34515315f7b03532b8b4e8393d2d"
 
 [[package]]
 name = "ordered-float"
-version = "4.6.0"
+version = "5.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7bb71e1b3fa6ca1c61f383464aaf2bb0e2f8e772a1f01d486832464de363b951"
+checksum = "e2c1f9f56e534ac6a9b8a4600bdf0f530fb393b5f393e7b4d03489c3cf0c3f01"
 dependencies = [
  "num-traits",
 ]
 
 [[package]]
 name = "parry2d"
-version = "0.18.0"
+version = "0.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "efd0ac62e76d6143e008a4988d795550d47aba40a50929d6b7b85e4230784403"
+checksum = "e9ce92fd1b7aaf2d7eb1631c566d751e56104152bf6ea95a1f3a7e8daf923d5c"
 dependencies = [
  "approx",
  "arrayvec",
@@ -350,24 +350,23 @@ dependencies = [
  "downcast-rs",
  "either",
  "ena",
+ "hashbrown",
  "log",
  "nalgebra",
  "num-derive",
  "num-traits",
  "ordered-float",
- "rustc-hash",
  "simba",
  "slab",
- "smallvec",
  "spade",
  "thiserror",
 ]
 
 [[package]]
 name = "parry3d"
-version = "0.18.0"
+version = "0.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ecb572cea5c76b06bc744aaefdbb9e6ea9e5695f50f79c0227bddecd6ec925a4"
+checksum = "a50f0d5730859f8326b26c8057aae09b790804f3e6c9dec38f4b2a1b91664529"
 dependencies = [
  "approx",
  "arrayvec",
@@ -375,16 +374,15 @@ dependencies = [
  "downcast-rs",
  "either",
  "ena",
+ "hashbrown",
  "log",
  "nalgebra",
  "num-derive",
  "num-traits",
  "ordered-float",
  "rstar",
- "rustc-hash",
  "simba",
  "slab",
- "smallvec",
  "spade",
  "thiserror",
 ]
@@ -434,9 +432,9 @@ dependencies = [
 
 [[package]]
 name = "rapier2d"
-version = "0.23.1"
+version = "0.24.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dd9ef3dbd7ab80f038f37a6952b00146a771ddde72244b0745ac43c2a4ad30c1"
+checksum = "0caf6613d797c5564c304b7579c78addd922fbfe3fd6a22a01130892546d3794"
 dependencies = [
  "approx",
  "arrayvec",
@@ -459,9 +457,9 @@ dependencies = [
 
 [[package]]
 name = "rapier3d"
-version = "0.23.1"
+version = "0.24.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "37d84644f385b81f065576058bc8f7e3d64e56a66f2f5fc40bfd917774659e12"
+checksum = "106edf55a415c64d2dccbb79faa2085e2bd02ded26b41b399b04b90219484c7e"
 dependencies = [
  "approx",
  "arrayvec",
@@ -550,9 +548,9 @@ dependencies = [
 
 [[package]]
 name = "smallvec"
-version = "1.14.0"
+version = "1.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7fcf8323ef1faaee30a44a340193b1ac6814fd9b7b4e88e9d4519a3e4abe1cfd"
+checksum = "8917285742e9f3e1683f0a9c4e6b57960b7314d0b08d30d1ecd426713ee2eee9"
 
 [[package]]
 name = "spade"
@@ -585,18 +583,18 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
-version = "1.0.69"
+version = "2.0.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b6aaf5339b578ea85b50e080feb250a3e8ae8cfcdff9a461c9ec2904bc923f52"
+checksum = "567b8a2dae586314f7be2a752ec7474332959c6460e02bde30d702a66d488708"
 dependencies = [
  "thiserror-impl",
 ]
 
 [[package]]
 name = "thiserror-impl"
-version = "1.0.69"
+version = "2.0.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4fee6c4efc90059e10f81e6d42c60a18f76588c3d74cb83a0b242a2b6c7504c1"
+checksum = "7f7cf42b4507d8ea322120659672cf1b9dbb93f8f2d4ecfd6e51350ff5b17a1d"
 dependencies = [
  "proc-macro2",
  "quote",
