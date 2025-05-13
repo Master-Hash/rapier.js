@@ -7,17 +7,17 @@ import {base64} from "rollup-plugin-base64";
 import copy from "rollup-plugin-copy";
 import filesize from "rollup-plugin-filesize";
 
-const config = (dim, features_postfix) => ({
-    input: `builds/${features_postfix}/gen${dim}/rapier.ts`,
+const config = (dim) => ({
+    input: `./gen${dim}/rapier.ts`,
     output: [
         {
-            file: `builds/${features_postfix}/pkg/rapier.es.js`,
+            file: `pkg${dim}/rapier.es.js`,
             format: "es",
             sourcemap: true,
             exports: "named",
         },
         {
-            file: `builds/${features_postfix}/pkg/rapier.cjs.js`,
+            file: `pkg${dim}/rapier.cjs.js`,
             format: "cjs",
             sourcemap: true,
             exports: "named",
@@ -27,11 +27,11 @@ const config = (dim, features_postfix) => ({
         copy({
             targets: [
                 {
-                    src: `builds/${features_postfix}/wasm-build/package.json`,
-                    dest: `builds/${features_postfix}/pkg/`,
+                    src: `./wasm-build${dim}/package.json`,
+                    dest: `./pkg${dim}/`,
                     transform(content) {
                         let config = JSON.parse(content.toString());
-                        config.name = `@dimforge/rapier${features_postfix}-compat`;
+                        config.name = `@dimforge/rapier${dim}-compat`;
                         config.description +=
                             " Compatibility package with inlined webassembly as base64.";
                         config.types = "rapier.d.ts";
@@ -43,12 +43,12 @@ const config = (dim, features_postfix) => ({
                     },
                 },
                 {
-                    src: `../rapier${features_postfix}/LICENSE`,
-                    dest: `builds/${features_postfix}/pkg`,
+                    src: `../rapier${dim}/LICENSE`,
+                    dest: `./pkg${dim}`,
                 },
                 {
-                    src: `../rapier${features_postfix}/README.md`,
-                    dest: `builds/${features_postfix}/pkg`,
+                    src: `../rapier${dim}/README.md`,
+                    dest: `./pkg${dim}`,
                 },
             ],
         }),
@@ -57,10 +57,7 @@ const config = (dim, features_postfix) => ({
         nodeResolve(),
         commonjs(),
         typescript({
-            tsconfig: path.resolve(
-                __dirname,
-                `builds/${features_postfix}/tsconfig.pkg.json`,
-            ),
+            tsconfig: path.resolve(__dirname, `tsconfig.pkg${dim}.json`),
             sourceMap: true,
             inlineSources: true,
         }),
@@ -68,11 +65,4 @@ const config = (dim, features_postfix) => ({
     ],
 });
 
-export default [
-    config("2d", "2d"),
-    config("2d", "2d-deterministic"),
-    config("2d", "2d-simd"),
-    config("3d", "3d"),
-    config("3d", "3d-deterministic"),
-    config("3d", "3d-simd"),
-];
+export default [config("2d"), config("3d")];
