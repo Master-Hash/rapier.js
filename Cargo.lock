@@ -37,9 +37,9 @@ checksum = "5e764a1d40d510daf35e07be9eb06e75770908c27d411ee6c92109c9840eaaf7"
 
 [[package]]
 name = "bitflags"
-version = "2.9.0"
+version = "2.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5c8214115b7bf84099f1309324e63141d4c5d7cc26862f97a0a857dbefe165bd"
+checksum = "1b8e56985ec62d17e9c1001dc89c88ecd7dc08e47eba5ec7c29c7b5eeecde967"
 
 [[package]]
 name = "bumpalo"
@@ -123,7 +123,7 @@ checksum = "d0a5c400df2834b80a4c3327b3aad3a4c4cd4de0629063962b03235697506a28"
 
 [[package]]
 name = "dimforge_rapier2d"
-version = "0.16.1"
+version = "0.17.0"
 dependencies = [
  "js-sys",
  "nalgebra",
@@ -133,7 +133,7 @@ dependencies = [
 
 [[package]]
 name = "dimforge_rapier3d"
-version = "0.16.1"
+version = "0.17.0"
 dependencies = [
  "js-sys",
  "nalgebra",
@@ -340,9 +340,9 @@ dependencies = [
 
 [[package]]
 name = "parry2d"
-version = "0.20.2"
+version = "0.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6b89f8a3309b82a3a81a6957c7916fe00834e79678451683b048e8d75109b9e4"
+checksum = "e42bcde4f79b1a4979cfd197ff88b488fe4419d9fdc4596ec1bd322f9dde873f"
 dependencies = [
  "approx",
  "arrayvec",
@@ -364,9 +364,9 @@ dependencies = [
 
 [[package]]
 name = "parry3d"
-version = "0.20.2"
+version = "0.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bec55ce6f725367f8149f750575e79a8879d71b7257c02273259f9375822821f"
+checksum = "9afd82705dbb85fa37be7fd2e27042cc913b97ca116bc0205e522ed30d5c25a7"
 dependencies = [
  "approx",
  "arrayvec",
@@ -432,9 +432,9 @@ dependencies = [
 
 [[package]]
 name = "rapier2d"
-version = "0.25.1"
+version = "0.26.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5ec6acdc5db3699c64e000945450c844d34b215dae3bf875b40e20b1909c0063"
+checksum = "5a9f1b88f5e0ae8d362754c217563fddcf53126a808851e0209f3d9eb8f7c661"
 dependencies = [
  "approx",
  "arrayvec",
@@ -457,9 +457,9 @@ dependencies = [
 
 [[package]]
 name = "rapier3d"
-version = "0.25.1"
+version = "0.26.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a35ec3d01c4f918675411442024a1fbfb7eafdd878a6e82479ff6e461a9092fc"
+checksum = "6cba962ac4bea788ed402278ea7696d88a4eb507839e2b1ac1015632e5803ab6"
 dependencies = [
  "approx",
  "arrayvec",
