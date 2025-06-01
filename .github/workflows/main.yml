@@ -37,7 +37,9 @@ jobs:
       - uses: taiki-e/install-action@v2
         with:
           tool: wasm-bindgen@0.2.100
-      - run: rustup target add wasm32-unknown-unknown
+      - run: |
+          rustup target add wasm32-unknown-unknown
+          rustup update stable
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
@@ -54,7 +56,7 @@ jobs:
           cd rapier2d
           cargo build --release --verbose --target wasm32-unknown-unknown
           wasm-bindgen ../target/wasm32-unknown-unknown/release/rapier_wasm2d.wasm --out-dir ./pkg --typescript --target web
-          wasm-opt ./pkg/rapier_wasm2d_bg.wasm -o ./pkg/rapier_wasm2d_bg.wasm -Oz --dce --enable-simd
+          wasm-opt ./pkg/rapier_wasm2d_bg.wasm -o ./pkg/rapier_wasm2d_bg.wasm -Oz --dce --enable-simd --enable-bulk-memory --enable-nontrapping-float-to-int
           ./build_typescript.sh
           pnpm tsc
       - uses: actions/upload-artifact@v4
