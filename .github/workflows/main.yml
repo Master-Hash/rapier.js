@@ -16,7 +16,7 @@ jobs:
         os: [ubuntu-24.04-arm]
     runs-on: ${{ matrix.os }}
     env:
-      RUSTFLAGS: -D warnings -C target-feature=+simd128
+      RUSTFLAGS: -D warnings -C target-feature=+simd128,+atomics,+bulk-memory,+mutable-globals
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
@@ -39,7 +39,6 @@ jobs:
           tool: wasm-bindgen@0.2.100
       - run: |
           rustup target add wasm32-unknown-unknown
-          rustup update stable
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
@@ -54,9 +53,9 @@ jobs:
       - name: Build rapier2d
         run: |
           cd rapier2d
-          cargo build --release --verbose --target wasm32-unknown-unknown
+          cargo build --release --verbose --target wasm32-unknown-unknown -Z build-std=panic_abort,std
           WASM_BINDGEN_EXPERIMENTAL_SYMBOL_DISPOSE=1 wasm-bindgen ../target/wasm32-unknown-unknown/release/rapier_wasm2d.wasm --out-dir ./pkg --typescript --target web
-          wasm-opt ./pkg/rapier_wasm2d_bg.wasm -o ./pkg/rapier_wasm2d_bg.wasm -Oz --dce --enable-simd --enable-bulk-memory --enable-nontrapping-float-to-int
+          wasm-opt ./pkg/rapier_wasm2d_bg.wasm -o ./pkg/rapier_wasm2d_bg.wasm -Oz --dce --enable-simd --enable-bulk-memory --enable-nontrapping-float-to-int --enable-threads --enable-mutable-globals
           ./build_typescript.sh
           pnpm tsc
       - uses: actions/upload-artifact@v4
