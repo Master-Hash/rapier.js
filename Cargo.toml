@@ -11,6 +11,8 @@ opt-level = "z"
 panic = "abort"
 
 [patch.crates-io]
+rapier2d = { git = "https://github.com/Master-Hash/rapier.git", branch = "master", package = "rapier2d" }
+rapier3d = { git = "https://github.com/Master-Hash/rapier.git", branch = "master", package = "rapier3d" }
 #rapier2d = { path = "../rapier/crates/rapier2d" }
 #rapier3d = { path = "../rapier/crates/rapier3d" }
 #parry2d = { path = "../parry/crates/parry2d" }
