@@ -13,6 +13,7 @@ panic = "abort"
 [patch.crates-io]
 rapier2d = { git = "https://github.com/Master-Hash/rapier.git", branch = "master", package = "rapier2d" }
 rapier3d = { git = "https://github.com/Master-Hash/rapier.git", branch = "master", package = "rapier3d" }
+wasm-bindgen-rayon = { git = "https://github.com/Master-Hash/wasm-bindgen-rayon.git", branch = "std-sync-mpmc" }
 #rapier2d = { path = "../rapier/crates/rapier2d" }
 #rapier3d = { path = "../rapier/crates/rapier3d" }
 #parry2d = { path = "../parry/crates/parry2d" }
