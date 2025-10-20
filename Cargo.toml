@@ -4,13 +4,15 @@ members = ["rapier2d", "rapier3d"]
 [profile.release]
 debug = false
 codegen-units = 1
-#lto = true
+lto = true
 strip = true # Workaround for https://github.com/bevyengine/bevy/issues/16030 (the bug only happens in 2D)
-lto = "thin"
+# lto = "thin"
 opt-level = "z"
 panic = "abort"
 
 [patch.crates-io]
+# hashbrown = { git = "https://github.com/rust-lang/hashbrown.git", tag = "v0.16.0" }
+spade = { git = "https://github.com/Master-Hash/spade.git", branch = "master" }
 rapier2d = { git = "https://github.com/Master-Hash/rapier.git", branch = "master", package = "rapier2d" }
 rapier3d = { git = "https://github.com/Master-Hash/rapier.git", branch = "master", package = "rapier3d" }
 wasm-bindgen-rayon = { git = "https://github.com/Master-Hash/wasm-bindgen-rayon.git", branch = "std-sync-mpmc" }

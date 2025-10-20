@@ -1,3 +1,46 @@
+### 0.19.2 (17 Oct. 2025)
+
+- Fix bug where kinematic bodies would not wake up when setting its velocity.
+- Fix bug where slow-moving kinematic bodies would fall asleep.
+- Fix point-projection on voxels shapes.
+
+### 0.19.1 (03 Oct. 2025)
+
+### Modified
+
+- Update to Rapier 0.30.0. The only change is a [switch to a sparse storage](https://github.com/dimforge/parry/pull/380)
+  for the Voxels shapes. This allows support for orders of magnitudes larger maps without reaching the 4GB WASM memory
+  limit.
+
+### 0.19.0 (05 Sept. 2025)
+
+### Modified
+
+- Update to Rapier 0.29.0 which includes performance improvements for scenes involving a lot of contact constraints.
+  See https://github.com/dimforge/rapier/pull/876 for details.
+- Renamed the `RigidBody.invPrincipalInertiaSqrt` and `.effectiveWorldInvInertiaSqrt` methods to
+  `RigidBody.invPrincipalInertia` and `.effectiveWorldInvInertia` (removed the `Sqrt` suffix). These methods will now
+  return the actual inverse angular inertia matrix rather than its square root.
+- Removed methods related to the legacy PGS solver: `World.numAdditionalFrictionIterations`,
+  `switchToStandardPgsSolver`, `switchToSmallStepsPgsSolver`, `switchToSmallStepsPgsSolverWithoutWarmstart`.
+
+### 0.18.2 (13 August 2025)
+
+### Fixed
+
+- Fix rollup configuration adding `types: "./rapier.d.ts"` to the export config.
+
+### 0.18.1 (8 August 2025)
+
+### Modified
+
+- Update to Rapier 0.28.0 which includes performance improvements when CCD is active and when
+  the user applies modification to a collider or rigid-body.
+
+### Fix
+
+- Another attempt to fix bundlerless module import with rapier-compat.
+
 ### 0.18.0 (24 July 2025)
 
 ### Added
@@ -15,7 +58,7 @@
 
 #### Modified
 
-- Update to Rapier 0.22.0-beta.1 which includes a fully reworked broad-phase tha supports scene queries.
+- Update to Rapier 0.27.0-beta.1 which includes a fully reworked broad-phase tha supports scene queries.
   This implies a performance gain on large scenes by avoiding the need to re-build the underlying acceleration
   structure at each frame.
 - Un-deprecate methods for reading shape properties (for example `collider.radius()`). It turned out that these

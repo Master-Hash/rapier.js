@@ -1,6 +1,6 @@
 [package]
 name = "dimforge_rapier3d" # Can't be named rapier3d which conflicts with the dependency.
-version = "0.18.0"
+version = "0.19.2"
 authors = ["Sébastien Crozet <developer@crozet.re>"]
 description = "3-dimensional physics engine in Rust - official JS bindings."
 documentation = "https://rapier.rs/rustdoc/rapier2d/index.html"
@@ -27,14 +27,14 @@ rust.unexpected_cfgs = { level = "warn", check-cfg = [
 ] }
 
 [dependencies]
-rapier3d = { version = "0.27.0", features = [
+rapier3d = { version = "0.30.1", features = [
     "simd-stable",
     "parallel",
     "profiler",
 ] }
-wasm-bindgen = "0.2.100"
+wasm-bindgen = "0.2.104"
 js-sys = "0.3"
-nalgebra = "0.33"
+nalgebra = "0.34"
 wasm-bindgen-rayon = "1.3"
 
 [package.metadata.wasm-pack.profile.release]
