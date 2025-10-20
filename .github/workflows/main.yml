@@ -16,7 +16,8 @@ jobs:
         os: [ubuntu-24.04-arm]
     runs-on: ${{ matrix.os }}
     env:
-      RUSTFLAGS: -D warnings -C target-feature=+simd128,+atomics,+bulk-memory,+mutable-globals
+      # github.com/wasm-bindgen/wasm-bindgen/pull/4717
+      RUSTFLAGS: -Dwarnings -Ctarget-feature=+simd128,+atomics,+bulk-memory,+mutable-globals -Clink-args=--shared-memory -Clink-args=--max-memory=1073741824 -Clink-args=--import-memory -Clink-args=--export=__wasm_init_tls -Clink-args=--export=__tls_size -Clink-args=--export=__tls_align -Clink-args=--export=__tls_base
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
@@ -46,7 +47,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install
