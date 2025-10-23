@@ -371,7 +371,7 @@ export class JointData {
     damping: number;
     length: number;
 
-    private constructor() {}
+    constructor() {}
 
     /**
      * Creates a new joint descriptor that builds a Fixed joint.
