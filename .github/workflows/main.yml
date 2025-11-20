@@ -31,10 +31,10 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - uses: supplypike/setup-bin@v4
         with:
-          uri: "https://github.com/WebAssembly/binaryen/releases/download/version_124/binaryen-version_124-aarch64-linux.tar.gz"
+          uri: "https://github.com/WebAssembly/binaryen/releases/download/version_125/binaryen-version_125-aarch64-linux.tar.gz"
           name: "wasm-opt"
-          version: "124"
-          subPath: "binaryen-version_124/bin"
+          version: "125"
+          subPath: "binaryen-version_125/bin"
       - uses: taiki-e/install-action@v2
         with:
           tool: wasm-bindgen@0.2.105
